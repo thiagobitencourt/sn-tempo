@@ -1,0 +1,19 @@
+.own-row{
+  float:left;
+  margin-left: 2%;
+  width: 30%;
+}
+
+/*  MEDIUM DEVICES - TABLETS  & DESKTOPS*/
+@media screen and (max-width: 995px){
+  .own-row{
+    width: 45%;
+  }
+}
+
+/*  SMALL DEVICES - TABLETS */
+@media screen and (max-width: 660px){
+  .own-row{
+    width: 100%;
+  }
+}

@@ -2,16 +2,171 @@
 <html ng-app="snTempo" lang="pt-BR">
   <head>
     <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>SN-Tempo</title>
-  </head>
-  <body>
+    <!-- Theme style -->
 
-    <div ng-controller="mainController">
-      {{hello}}
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/skin-blue.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="hold-transition skin-blue layout-top-nav">
+    <div class="wrapper" ng-controller="mainController">
+      <header class="main-header">
+        <nav class="navbar navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="#" class="navbar-brand"><b>SN</b>-Tempo</a>
+            </div>
+            <div class="navbar-custom-menu hidden-xs">
+              <ul class="nav navbar-nav">
+                <li class="tasks-menu">
+                  <a href="https://github.com/thiagobitencourt/sn-tempo" data-toggle="tooltip" title="GitHub" target="_blank" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-github fa-lg"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <div class="content-wrapper">
+          <div class="container">
+
+            <section class="content">
+              <!-- <div class="callout callout-danger">
+                <h4>Warning!</h4>
+
+                <p>The construction of this layout differs from the normal one. In other words, the HTML markup of the navbar
+                  and the content will slightly differ than that of the normal layout.</p>
+              </div> -->
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="box box-default">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Previsão do tempo</h3>
+                    </div>
+                    <div class="box-body">
+
+                      <div class="row">
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                          <div class="form-group">
+                            <label>Estado</label>
+                            <select class="form-control" ng-model="cities" ng-options="state as state.nome for state in states">
+                              <option ng-selected="state.nome == 'Santa Catarina'"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                          <div class="form-group">
+                            <label>Cidade</label>
+                            <select class="form-control" ng-model="cityName" ng-options="city as city for city in cities.cidades">
+                              <option ng-selected="citi == 'Blumenau'"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                          <button style="margin-top: 1.8em;" type="button" name="button" class="btn btn-primary" ng-click="showWeather()">Mostrar</button>
+                        </div>
+                      </div>
+
+                      <hr>
+                      <div>
+                        <h4>{{weatherInfo.cidade}}</h4>
+
+                        <div class="own-row" ng-repeat="previsao in weatherInfo.previsoes">
+                          <!-- class="col-md-4 col-sm-6 col-xs-12" -->
+                          <div style="display: inline;">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-aqua">
+                                  <img ng-src="{{previsao.imagem}}" alt="Icon" />
+                                </span>
+                                <div class="info-box-content">
+                                  <span class="info-box-text">{{previsao.data}}</span>
+                                  <span class="info-box-text">{{previsao.descricao}}</span>
+                                  <span class="info-box-number">Min.: {{previsao.temperatura_min}}&deg;</span>
+                                  <span class="info-box-number">Máx.: {{previsao.temperatura_max}}&deg;</span>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </section>
+
+
+            <section class="content">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="box box-warning">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Minima e Máxima</h3>
+                    </div>
+                    <div class="box-body">
+
+                      <h4>Content here...</h4>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="box box-danger">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Recomendação</h3>
+                    </div>
+                    <div class="box-body ">
+
+                      <h4>Content here...</h4>
+
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="box box-info">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Variação</h3>
+                    </div>
+                    <div class="box-body ">
+                      <h4>Content here...</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+      <footer class="main-footer">
+        <div class="container">
+          <div class="pull-right hidden-xs">
+            <b>Versão</b> 1.0.0
+          </div>
+          <strong>&copy; 2016 SN-Tempo.</strong> <a href="https://github.com/thiagobitencourt" target="_blank">Thiago Bitencourt</a>
+        </div>
+      </footer>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="js/snTempo.js"> </script>
     <script src="js/controllers/mainController.js"> </script>
+    <script src="js/services/cities.js"> </script>
+    <script src="js/services/weatherApi.js"> </script>
   </body>
 </html>
