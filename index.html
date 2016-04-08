@@ -75,8 +75,7 @@
 
                         <h4>{{weatherInfo.cidade}}</h4>
                         <div class="own-row" ng-repeat="previsao in weatherInfo.previsoes">
-                          <!-- class="col-md-4 col-sm-6 col-xs-12" -->
-                          <div style="display: inline;">
+                          <div>
                             <div class="info-box">
                                 <span class="info-box-icon bg-aqua">
                                   <img ng-src="{{previsao.imagem}}" alt="Icon" />
@@ -107,8 +106,7 @@
                 {{messageErr}}
               </div>
             </section>
-
-            <section ng-if="weatherInfo" class="content">
+            <section ng-if="weatherInfo" class="content box-size">
               <div class="row">
                 <div class="col-md-4">
                   <div class="box box-warning">
@@ -121,7 +119,7 @@
                         </button>
                       </div>
                     </div>
-                    <div class="box-body" ng-class="{'collapse' : collapM}">
+                    <div class="box-body box-size" ng-class="{'collapse' : collapM}">
                       <h4>Máxima</h4>
                       <span class="info-box-number">{{maxima.temperatura_max}}&deg;</span>
                       <span class="info-box-text">{{maxima.data}}</span>
@@ -129,7 +127,6 @@
                       <h4>Mínima</h4>
                       <span class="info-box-number">{{minima.temperatura_min}}&deg;</span>
                       <span class="info-box-text">{{minima.data}}</span>
-                      <br> <!-- Align purpouse -->
                     </div>
                   </div>
                 </div>
@@ -145,7 +142,7 @@
                         </button>
                       </div>
                     </div>
-                    <div class="box-body" ng-class="{'collapse' : collapR}">
+                    <div class="box-body box-size" ng-class="{'collapse' : collapR}">
 
                       <div ng-if="recommend">
                         <div class="text-aqua">
@@ -153,8 +150,7 @@
                         </div>
                         <p align="center"> A praia estará ótima no final de semana. </p>
                         <span class="info-box-number">Temperatura: {{sunday.temperatura_max}}&deg;</span>
-                        <span class="info-box-number" style="padding-bottom: 0.5em;">{{sunday.descricao}} - {{sunday.data}}</span>
-                        <br> <!-- Align purpouse -->
+                        <span class="info-box-number">{{sunday.descricao}} - {{sunday.data}}</span>
                       </div>
 
                       <div ng-if="!recommend">
@@ -163,8 +159,7 @@
                         </div>
                         <p align="center"> A praia pode não ser uma boa opção. </p>
                         <span class="info-box-number">Temperatura: {{sunday.temperatura_max}}&deg;</span>
-                        <span class="info-box-number" style="padding-bottom: 0.5em;">{{sunday.descricao}} - {{sunday.data}}</span>
-                        <br> <!-- Align purpouse -->
+                        <span class="info-box-number">{{sunday.descricao}} - {{sunday.data}}</span>
                       </div>
 
                     </div>
@@ -182,7 +177,7 @@
                         </button>
                       </div>
                     </div>
-                    <div class="box-body" ng-class="{'collapse' : collapV}">
+                    <div class="box-body box-size" ng-class="{'collapse' : collapV}">
                       <div class="chart">
                         <canvas id="line" class="chart chart-line" chart-data="data"
                           chart-labels="labels" chart-legend="true" chart-series="series">

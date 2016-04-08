@@ -1,19 +1,28 @@
-.own-row{
+.own-row {
   float:left;
   margin-left: 2%;
   width: 30%;
 }
+.box-size {
+  height: 250px;
+}
 
 /*  MEDIUM DEVICES - TABLETS  & DESKTOPS*/
 @media screen and (max-width: 995px){
-  .own-row{
+  .own-row {
     width: 45%;
+  }
+  .box-size {
+    height: auto;
   }
 }
 
 /*  SMALL DEVICES - TABLETS */
 @media screen and (max-width: 660px){
-  .own-row{
+  .own-row {
     width: 100%;
+  }
+  .box-size {
+    height: auto;
   }
 }
