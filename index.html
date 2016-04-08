@@ -124,7 +124,7 @@
                     <div class="box-body" ng-class="{'collapse' : collapM}">
 
                       <h4>Máxima</h4>
-                      <span class="info-box-number">{{maxima.temperatura_min}}&deg;</span>
+                      <span class="info-box-number">{{maxima.temperatura_max}}&deg;</span>
                       <span class="info-box-text">{{maxima.data}}</span>
                       <hr>
                       <h4>Mínima</h4>
@@ -148,7 +148,23 @@
                     </div>
                     <div class="box-body" ng-class="{'collapse' : collapR}">
 
-                      <h4>Content here...</h4>
+                      <div ng-if="recommend">
+                        <div class="text-aqua">
+                          <h4 align="center"><i class="fa fa-thumbs-o-up fa-5x"></i></h4>
+                        </div>
+                        <p align="center"> A praia estará ótima no final de semana. </p>
+                        <span class="info-box-number">Temperatura: {{sunday.temperatura_max}}&deg;</span>
+                        <span class="info-box-number" style="padding-bottom: .5em;">{{sunday.descricao}} - {{sunday.data}}</span>
+                      </div>
+
+                      <div ng-if="!recommend">
+                        <div class="text-danger">
+                          <h4 align="center"><i class="fa fa-thumbs-o-down fa-5x"></i></h4>
+                        </div>
+                        <p align="center"> A praia pode não ser uma boa opção. </p>
+                        <span class="info-box-number">Temperatura: {{sunday.temperatura_max}}&deg;</span>
+                        <span class="info-box-number" style="padding-bottom: .5em;">{{sunday.descricao}} - {{sunday.data}}</span>
+                      </div>
 
                     </div>
                   </div>

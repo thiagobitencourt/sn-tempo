@@ -2,7 +2,7 @@
 app.controller('mainController', ['$scope', 'cities', 'weatherApi', function($scope, cities, weatherApi) {
   $scope.states = cities.estados;
   $scope.waiting = false;
-
+  /* Search for the day with maximum and minimum temperature*/
   var maxAndMin = function() {
     var max = {temperatura_max: null};
     var min = {temperatura_min: 100};
@@ -14,6 +14,19 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', function($sc
     });
     $scope.maxima = max;
     $scope.minima = min;
+  }
+  /* Verifies if the next sunday will be appropriate for a beach ride */
+  var recommendation = function() {
+    $scope.recommend = false;
+    $scope.weatherInfo.previsoes.some(function(pr) {
+      if (pr.data.split(" - ")[0].indexOf("Domingo") > -1) {
+        $scope.sunday = pr;
+        if ((pr.descricao.indexOf("Tempo Bom") > -1) && (pr.temperatura_max > 25)) {
+          $scope.recommend = true;
+        }
+        return true;
+      }
+    });
   }
 
   $scope.showWeather = function(){
@@ -31,6 +44,7 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', function($sc
       $scope.weatherInfo = result.data;
       $scope.waiting = false;
       maxAndMin();
+      recommendation();
     },
     function(err) {
         $scope.messageErr = "Não foi possível obter as informações de tempo para a cidade desejada."
