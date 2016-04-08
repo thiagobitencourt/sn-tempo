@@ -28,7 +28,22 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', function($sc
       }
     });
   }
-
+  /* Set values and data to config char */
+  var chartConfig = function() {
+    var labels = [];
+    var min = [];
+    var max = [];
+    $scope.series = ['Máxima', 'Mínima'];
+    $scope.weatherInfo.previsoes.forEach(function(pr) {
+      labels.push(pr.data.split(" - ")[0]); //Show days name as labels
+      // labels.push(pr.data.split(" - ")[1]); //Show days (dd/mm/yyyy) as labels.
+      min.push(pr.temperatura_min);
+      max.push(pr.temperatura_max);
+    });
+    $scope.labels = labels;
+    $scope.data = [max, min];
+  }
+  /* Function called by ng-click to consult and show weather for a specific city */
   $scope.showWeather = function(){
     /* If there is no state or city selected show the error message and do not search */
     if(!$scope.state || !$scope.cityName) {
@@ -45,6 +60,7 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', function($sc
       $scope.waiting = false;
       maxAndMin();
       recommendation();
+      chartConfig();
     },
     function(err) {
         $scope.messageErr = "Não foi possível obter as informações de tempo para a cidade desejada."

@@ -122,7 +122,6 @@
                       </div>
                     </div>
                     <div class="box-body" ng-class="{'collapse' : collapM}">
-
                       <h4>Máxima</h4>
                       <span class="info-box-number">{{maxima.temperatura_max}}&deg;</span>
                       <span class="info-box-text">{{maxima.data}}</span>
@@ -130,7 +129,7 @@
                       <h4>Mínima</h4>
                       <span class="info-box-number">{{minima.temperatura_min}}&deg;</span>
                       <span class="info-box-text">{{minima.data}}</span>
-
+                      <br> <!-- Align purpouse -->
                     </div>
                   </div>
                 </div>
@@ -154,7 +153,8 @@
                         </div>
                         <p align="center"> A praia estará ótima no final de semana. </p>
                         <span class="info-box-number">Temperatura: {{sunday.temperatura_max}}&deg;</span>
-                        <span class="info-box-number" style="padding-bottom: .5em;">{{sunday.descricao}} - {{sunday.data}}</span>
+                        <span class="info-box-number" style="padding-bottom: 0.5em;">{{sunday.descricao}} - {{sunday.data}}</span>
+                        <br> <!-- Align purpouse -->
                       </div>
 
                       <div ng-if="!recommend">
@@ -163,7 +163,8 @@
                         </div>
                         <p align="center"> A praia pode não ser uma boa opção. </p>
                         <span class="info-box-number">Temperatura: {{sunday.temperatura_max}}&deg;</span>
-                        <span class="info-box-number" style="padding-bottom: .5em;">{{sunday.descricao}} - {{sunday.data}}</span>
+                        <span class="info-box-number" style="padding-bottom: 0.5em;">{{sunday.descricao}} - {{sunday.data}}</span>
+                        <br> <!-- Align purpouse -->
                       </div>
 
                     </div>
@@ -182,7 +183,11 @@
                       </div>
                     </div>
                     <div class="box-body" ng-class="{'collapse' : collapV}">
-                      <h4>Content here...</h4>
+                      <div class="chart">
+                        <canvas id="line" class="chart chart-line" chart-data="data"
+                          chart-labels="labels" chart-legend="true" chart-series="series">
+                        </canvas>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -202,7 +207,10 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script>var app = angular.module("snTempo", []); /* Create the angular application */</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"> </script>
+    <!-- <script src="js/lib/angular-chart.min.js"> </script> -->
+    <script src="http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"> </script>
+    <script>var app = angular.module("snTempo", ['chart.js']); /* Create the angular application */</script>
     <script src="js/controllers/mainController.js"> </script>
     <script src="js/services/cities.js"> </script>
     <script src="js/services/weatherApi.js"> </script>
