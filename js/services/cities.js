@@ -1,3 +1,4 @@
+'use strict';
 app.factory('cities', function() {
   return {
   "estados": [

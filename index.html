@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>SN-Tempo</title>
-    <!-- Theme style -->
-
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -41,12 +39,12 @@
           <div class="container">
 
             <section class="content">
-              <!-- <div class="callout callout-danger">
-                <h4>Warning!</h4>
 
-                <p>The construction of this layout differs from the normal one. In other words, the HTML markup of the navbar
-                  and the content will slightly differ than that of the normal layout.</p>
-              </div> -->
+              <div ng-if="messageErr" class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="closeErr()">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Erro!</h4>
+                {{messageErr}}
+              </div>
 
               <div class="row">
                 <div class="col-md-12">
@@ -60,28 +58,28 @@
                         <div class="col-md-5 col-sm-5 col-xs-12">
                           <div class="form-group">
                             <label>Estado</label>
-                            <select class="form-control" ng-model="cities" ng-options="state as state.nome for state in states">
-                              <option ng-selected="state.nome == 'Santa Catarina'"></option>
+                            <select class="form-control" ng-model="state" ng-options="st as st.nome for st in states">
+                              <option ng-selected="st.nome == 'Santa Catarina'"></option>
                             </select>
                           </div>
                         </div>
                         <div class="col-md-5 col-sm-5 col-xs-12">
                           <div class="form-group">
                             <label>Cidade</label>
-                            <select class="form-control" ng-model="cityName" ng-options="city as city for city in cities.cidades">
+                            <select class="form-control" ng-model="cityName" ng-options="city as city for city in state.cidades">
                               <option ng-selected="citi == 'Blumenau'"></option>
                             </select>
                           </div>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12">
-                          <button style="margin-top: 1.8em;" type="button" name="button" class="btn btn-primary" ng-click="showWeather()">Mostrar</button>
+                          <button style="margin-top: 1.8em;" type="button" name="button" class="btn btn-primary" ng-click="showWeather()">Buscar</button>
                         </div>
                       </div>
 
                       <hr>
                       <div>
-                        <h4>{{weatherInfo.cidade}}</h4>
 
+                        <h4>{{weatherInfo.cidade}}</h4>
                         <div class="own-row" ng-repeat="previsao in weatherInfo.previsoes">
                           <!-- class="col-md-4 col-sm-6 col-xs-12" -->
                           <div style="display: inline;">
@@ -99,17 +97,17 @@
                           </div>
                         </div>
 
-
+                        <div ng-if="waiting" class="overlay" style="margin-top: 14em;">
+                          <i class="fa fa-refresh fa-spin"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </section>
 
-
-            <section class="content">
+            <section ng-if="weatherInfo" class="content">
               <div class="row">
                 <div class="col-md-4">
                   <div class="box box-warning">
@@ -132,7 +130,6 @@
                     <div class="box-body ">
 
                       <h4>Content here...</h4>
-
 
                     </div>
                   </div>
@@ -164,7 +161,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script src="js/snTempo.js"> </script>
+    <script>var app = angular.module("snTempo", []); /* Create the angular application */</script>
     <script src="js/controllers/mainController.js"> </script>
     <script src="js/services/cities.js"> </script>
     <script src="js/services/weatherApi.js"> </script>
