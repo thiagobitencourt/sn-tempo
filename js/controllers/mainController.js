@@ -48,17 +48,15 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', 'blMocks', f
   }
   /* Function called by ng-click to consult and show weather for a specific city */
   $scope.showWeather = function(){
+    $scope.weatherInfo = false; //Removes any existing weather info.
+    $scope.messageErr = false; //Removes any existing error message.
     /* If there is no state or city selected show the error message and do not search */
     if(!$scope.state || !$scope.cityName) {
         $scope.messageErr = missingState;
         return;
     }
     $scope.waiting = true; //Set waiting for the spinner loader shows up.
-    $scope.weatherInfo = false; //Removes any existing weather info.
-    $scope.messageErr = false; //Removes any existing error message.
-
     var done = function(data) {
-      console.log(angular.toJson(data));
       $scope.weatherInfo = data;
       $scope.waiting = false;
       maxAndMin();

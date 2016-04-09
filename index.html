@@ -51,7 +51,6 @@
                           <div class="form-group">
                             <label>Estado</label>
                             <select class="form-control" ng-model="state" ng-options="st as st.nome for st in states">
-                              <option></option>
                             </select>
                           </div>
                         </div>
@@ -59,14 +58,14 @@
                           <div class="form-group">
                             <label>Cidade</label>
                             <select class="form-control" ng-model="cityName" ng-options="city as city for city in state.cidades">
-                              <option ng-selected="city == 'Blumenau'"></option>
+                              <option></option>
                             </select>
                           </div>
                         </div>
-                        <div class="col-md-1 col-sm-1 col-xs-6">
+                        <div class="col-md-1 col-sm-2 col-xs-6">
                           <button style="margin-top: 1.8em;" type="button" name="button" class="btn btn-primary" ng-click="showWeather()">Buscar</button>
                         </div>
-                        <div class="col-md-1 col-sm-1 col-xs-6">
+                        <div class="col-md-1 col-sm-2 col-xs-6">
                           <input style="margin-top: 1.8em;" type="checkbox" name="favorite" ng-model="cbFavorite"
                           ng-click="setFavorite()" ng-checked="(state.sigla && state.sigla == favoriteState) && (cityName && cityName == favoriteCity)"
                           ng-disabled="(state.sigla && state.sigla == favoriteState) && (cityName && cityName == favoriteCity)"> Favorito</input>
@@ -208,7 +207,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"> </script>
-    <!-- <script src="js/lib/angular-chart.min.js"> </script> -->
     <script src="http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"> </script>
     <script>var app = angular.module("snTempo", ['chart.js']); /* Create the angular application */</script>
     <script src="js/controllers/mainController.js"> </script>
