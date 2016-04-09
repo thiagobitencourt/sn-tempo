@@ -1,7 +1,33 @@
 'use strict'
 app.controller('mainController', ['$scope', 'cities', 'weatherApi', function($scope, cities, weatherApi) {
+  var missingState = "Selecione corretamente um estado e uma cidade.";
   $scope.states = cities.estados;
   $scope.waiting = false;
+  var favoriteErr = false;
+  var loadFavorite = function() {
+    var favorite = angular.fromJson(localStorage.getItem('favorite'));
+    if (favorite) {
+      $scope.favoriteCity = favorite.city;
+      $scope.favoriteState = favorite.state;
+      $scope.hasFavorite = true;
+
+      $scope.states.some(function(st) {
+        if (st.sigla.indexOf(favorite.state) > -1) {
+          $scope.state = st;
+          return true;
+        }
+      });
+      $scope.state.cidades.some(function(ct) {
+        if(ct.indexOf($scope.favoriteCity) > -1) {
+          $scope.cityName = ct;
+          $scope.cbFavorite = true;
+          return true;
+        }
+      });
+    }
+  }
+  loadFavorite();
+
   /* Search for the day with maximum and minimum temperature*/
   var maxAndMin = function() {
     var max = {temperatura_max: null};
@@ -47,7 +73,7 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', function($sc
   $scope.showWeather = function(){
     /* If there is no state or city selected show the error message and do not search */
     if(!$scope.state || !$scope.cityName) {
-        $scope.messageErr = "Selecione corretamente um estado e uma cidade.";
+        $scope.messageErr = missingState;
         return;
     }
     $scope.waiting = true; //Set waiting for the spinner loader shows up.
@@ -67,9 +93,36 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', function($sc
         $scope.waiting = false;
     });
   }
+  /* Remos the favorite place */
+  $scope.removeFavorite = function() {
+    localStorage.removeItem('favorite');
+    $scope.favoritecity = null;
+    $scope.favoriteState = null;
+    $scope.hasFavorite = false;
+    $scope.cbFavorite = false;
+  }
+
+  $scope.setFavorite = function() {
+    $scope.messageErr = false; //Removes any existing error message.
+    if(!$scope.cbFavorite)
+      return;
+    if (!$scope.cityName || !$scope.state) {
+      favoriteErr = true;
+      $scope.messageErr = missingState;
+      return;
+    }
+    $scope.favoriteCity = $scope.cityName;
+    $scope.favoriteState = $scope.state.sigla;
+    localStorage.setItem('favorite', angular.toJson({city: $scope.cityName, state: $scope.state.sigla}));
+    $scope.hasFavorite = true;
+  }
 
   /* Closes the error message */
   $scope.closeErr = function() {
+    if (favoriteErr) {
+      $scope.cbFavorite = false;
+      favoriteErr = false;
+    }
     $scope.messageErr = false;
   }
 }]);

@@ -34,7 +34,6 @@
           </div>
         </nav>
       </header>
-      <main>
         <div class="content-wrapper">
           <div class="container">
 
@@ -47,13 +46,12 @@
                       <h3 class="box-title">Previsão do tempo</h3>
                     </div>
                     <div class="box-body">
-
                       <div class="row">
                         <div class="col-md-5 col-sm-5 col-xs-12">
                           <div class="form-group">
                             <label>Estado</label>
                             <select class="form-control" ng-model="state" ng-options="st as st.nome for st in states">
-                              <option ng-selected="st.nome == 'Santa Catarina'"></option>
+                              <option></option>
                             </select>
                           </div>
                         </div>
@@ -61,13 +59,21 @@
                           <div class="form-group">
                             <label>Cidade</label>
                             <select class="form-control" ng-model="cityName" ng-options="city as city for city in state.cidades">
-                              <option ng-selected="citi == 'Blumenau'"></option>
+                              <option ng-selected="city == 'Blumenau'"></option>
                             </select>
                           </div>
                         </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div class="col-md-1 col-sm-1 col-xs-6">
                           <button style="margin-top: 1.8em;" type="button" name="button" class="btn btn-primary" ng-click="showWeather()">Buscar</button>
                         </div>
+                        <div class="col-md-1 col-sm-1 col-xs-6">
+                          <input style="margin-top: 1.8em;" type="checkbox" name="favorite" ng-model="cbFavorite"
+                          ng-click="setFavorite()" ng-checked="(state.sigla && state.sigla == favoriteState) && (cityName && cityName == favoriteCity)"
+                          ng-disabled="(state.sigla && state.sigla == favoriteState) && (cityName && cityName == favoriteCity)"> Favorito</input>
+                        </div>
+                      </div>
+                      <div ng-if="hasFavorite">
+                        <h5>Localidade Favorita: {{favoriteCity}}-{{favoriteState}} <a href="" ng-click="removeFavorite()" data-toggle="tooltip" title="Remover"><i class="fa fa-times text-danger" ></i></a></h5>
                       </div>
 
                       <hr>
@@ -189,16 +195,15 @@
               </div>
             </section>
           </div>
-        </div>
-      </main>
-      <footer class="main-footer">
-        <div class="container">
-          <div class="pull-right hidden-xs">
-            <b>Versão</b> 1.0.0
+      </div>
+        <footer class="main-footer">
+          <div class="container">
+            <div class="pull-right hidden-xs">
+              <b>Versão</b> 1.0.0
+            </div>
+            <strong>&copy; 2016 SN-Tempo.</strong> <a href="https://github.com/thiagobitencourt" target="_blank">Thiago Bitencourt</a>
           </div>
-          <strong>&copy; 2016 SN-Tempo.</strong> <a href="https://github.com/thiagobitencourt" target="_blank">Thiago Bitencourt</a>
-        </div>
-      </footer>
+        </footer>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
