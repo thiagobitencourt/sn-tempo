@@ -1,9 +1,24 @@
 'use strict'
-app.controller('mainController', ['$scope', 'cities', 'weatherApi', 'blMocks', function($scope, cities, weatherApi, blMocks) {
+app.controller('mainController', ['$scope', '$rootScope', 'cities', 'weatherApi', 'blMocks', 'favoriteManager',
+function($scope, $rootScope, cities, weatherApi, blMocks, favoriteManager) {
   var missingState = "Selecione corretamente um estado e uma cidade.";
   $scope.states = cities.estados;
   $scope.waiting = false;
   var favoriteErr = false;
+
+   $rootScope.$on('favorite', function(event, data) {
+     if(data) {
+       $scope.hasFavorite = true;
+       $scope.favoriteCity = data.city;
+       $scope.favoriteState = data.state;
+     } else {
+       $scope.favoritecity = null;
+       $scope.favoriteState = null;
+       $scope.cbFavorite = false;
+       $scope.hasFavorite = false;
+     }
+   });
+
   /* Search for the day with maximum and minimum temperature*/
   var maxAndMin = function() {
     var max = {temperatura_max: null};
@@ -56,24 +71,15 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', 'blMocks', f
         return;
     }
     $scope.waiting = true; //Set waiting for the spinner loader shows up.
-    var done = function(data) {
-      $scope.weatherInfo = data;
+    weatherApi.consult($scope.cityName, $scope.state.sigla)
+    .then(function(result) {
+      $scope.weatherInfo = result.data;
       $scope.waiting = false;
       maxAndMin();
       recommendation();
       chartConfig();
-    }
-    /* The API does not respond for Blumenau city as expected.
-     So, is used mocks to show some random datas, as suggested */
-    if ($scope.state.sigla == blMocks.sigla && $scope.cityName == blMocks.nome) {
-      console.log('Using Mocks for Blumenau City');
-      done(blMocks);
-      return;
-    }
-
-    weatherApi.consult($scope.cityName, $scope.state.sigla)
-    .then(function(result) {
-      done(result.data);
+      if($scope.cbFavorite) //If is the favorite city, save the data into cache
+        favoriteManager.setData(result.data);
     },
     function(err) {
         $scope.messageErr = "Não foi possível obter as informações de tempo para a cidade desejada."
@@ -81,7 +87,9 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', 'blMocks', f
     });
   }
   /* Set the favorite state and city */
-  var configFavorite = function(favorite) {
+  var loadFavorite = function(favorite) {
+    //Load the favorite city from service
+    var favorite = favoriteManager.getFavorite();
     $scope.states.some(function(st) {
       if (st.sigla.indexOf(favorite.state) > -1) {
         $scope.state = st;
@@ -97,31 +105,12 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', 'blMocks', f
     });
     $scope.showWeather(); //Load favorite weather info
   }
-  /* Get the favorite state/city from localStorage or the default from mocks */
-  var loadFavorite = function() {
-    var favorite = angular.fromJson(localStorage.getItem('favorite'));
-    if (favorite) {
-      $scope.favoriteCity = favorite.city;
-      $scope.favoriteState = favorite.state;
-      $scope.hasFavorite = true;
-      configFavorite(favorite);
-    } else {
-      $scope.favoriteCity = blMocks.nome;
-      $scope.favoriteState = blMocks.sigla;
-      $scope.hasFavorite = true;
-      configFavorite({state: blMocks.sigla, city: blMocks.nome});
-    }
-  }
   //First load of the page
   loadFavorite();
 
   /* Remos the favorite place */
   $scope.removeFavorite = function() {
-    localStorage.removeItem('favorite');
-    $scope.favoritecity = null;
-    $scope.favoriteState = null;
-    $scope.hasFavorite = false;
-    $scope.cbFavorite = false;
+    favoriteManager.removeFavorite();
   }
   /* Save the new favorite into the localStorage */
   $scope.setFavorite = function() {
@@ -133,10 +122,7 @@ app.controller('mainController', ['$scope', 'cities', 'weatherApi', 'blMocks', f
       $scope.messageErr = missingState;
       return;
     }
-    $scope.favoriteCity = $scope.cityName;
-    $scope.favoriteState = $scope.state.sigla;
-    localStorage.setItem('favorite', angular.toJson({city: $scope.cityName, state: $scope.state.sigla}));
-    $scope.hasFavorite = true;
+    favoriteManager.setFavorite({city: $scope.cityName, state: $scope.state.sigla});
   }
 
   /* Closes the error message */
