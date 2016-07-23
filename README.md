@@ -27,4 +27,4 @@ Para a utilização do applicativo sem a necessidade de clonar o repositório, a
 - Indicação de passeio na praia de acordo com a previsão do tempo para o próximo final de semana.
 
 ## Versão
-1.0.0
+1.0.1

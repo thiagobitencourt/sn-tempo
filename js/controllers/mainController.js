@@ -23,11 +23,16 @@ function($scope, $rootScope, cities, weatherApi, blMocks, favoriteManager) {
   var maxAndMin = function() {
     var max = {temperatura_max: null};
     var min = {temperatura_min: 100};
-    $scope.weatherInfo.previsoes.forEach(function(pr) {
-      if (pr.temperatura_max > max.temperatura_max)
-        max = pr;
-      if (pr.temperatura_min < min.temperatura_min)
-        min = pr;
+    $scope.weatherInfo.list.forEach(function(pr) {
+      var data = new Date(pr.dt * 1000);
+      if (pr.temp.max > max.temperatura_max) {
+        max.temperatura_max = pr.temp.max;
+        max.data = data;
+      }
+      if (pr.temp.min < min.temperatura_min) {
+        min.temperatura_min = pr.temp.min;
+        min.data = data;
+      }
     });
     $scope.maxima = max;
     $scope.minima = min;
@@ -35,11 +40,15 @@ function($scope, $rootScope, cities, weatherApi, blMocks, favoriteManager) {
   /* Verifies if the next sunday will be appropriate for a beach ride */
   var recommendation = function() {
     $scope.recommend = false;
-    $scope.weatherInfo.previsoes.some(function(pr) {
-      if (pr.data.split(" - ")[0].indexOf("Domingo") > -1) {
-        $scope.sunday = pr;
-        if ((pr.descricao.indexOf("Tempo Bom") > -1 ||
-              pr.descricao.indexOf("Ensolarado") > -1 ) && (pr.temperatura_max > 25)) {
+    $scope.weatherInfo.list.some(function(pr) {
+      var data = new Date(pr.dt * 1000);
+      if (data.toString().split(" ")[0].indexOf("Sun") > -1) {
+        $scope.sunday = {
+          temperatura_max: pr.temp.max,
+          descricao: pr.weather[0].description,
+          data: data
+        }
+        if ((pr.weather[0].description.indexOf("céu claro") > -1 && (pr.temp.max > 25))) {
           $scope.recommend = true;
         }
         return true;
@@ -52,11 +61,12 @@ function($scope, $rootScope, cities, weatherApi, blMocks, favoriteManager) {
     var min = [];
     var max = [];
     $scope.series = ['Máxima', 'Mínima'];
-    $scope.weatherInfo.previsoes.forEach(function(pr) {
-      labels.push(pr.data.split(" - ")[0]); //Show days name as labels
+    $scope.weatherInfo.list.forEach(function(pr) {
+      var data = new Date(pr.dt * 1000);
+      labels.push(data.toString().split(" ")[0]); //Show days name as labels
       // labels.push(pr.data.split(" - ")[1]); //Show days (dd/mm/yyyy) as labels.
-      min.push(pr.temperatura_min);
-      max.push(pr.temperatura_max);
+      min.push(pr.temp.min);
+      max.push(pr.temp.max);
     });
     $scope.labels = labels;
     $scope.data = [max, min];
@@ -73,6 +83,18 @@ function($scope, $rootScope, cities, weatherApi, blMocks, favoriteManager) {
     $scope.waiting = true; //Set waiting for the spinner loader shows up.
     weatherApi.consult($scope.cityName, $scope.state.sigla)
     .then(function(result) {
+      var arr = [];
+      result.data.list.forEach(function(e){
+        var dt = new Date(e.dt * 1000);
+        arr.push({
+          data: dt,
+          descricao: e.weather[0].description,
+          imagem: e.weather[0].icon,
+          temperatura_min: e.temp.min,
+          temperatura_max: e.temp.max
+        });
+      });
+      result.data.previsoes = arr;
       $scope.weatherInfo = result.data;
       $scope.waiting = false;
       maxAndMin();

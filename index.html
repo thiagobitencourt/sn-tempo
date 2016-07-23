@@ -83,10 +83,10 @@
                           <div>
                             <div class="info-box">
                                 <span class="info-box-icon bg-aqua">
-                                  <img ng-src="{{previsao.imagem}}" alt="Icon" />
+                                  <img ng-src="http://openweathermap.org/img/w/{{previsao.imagem}}.png" alt="Icon" />
                                 </span>
                                 <div class="info-box-content">
-                                  <span class="info-box-text">{{previsao.data}}</span>
+                                  <span class="info-box-text">{{previsao.data | date: 'EEEE d MMM'}}</span>
                                   <span class="info-box-text">{{previsao.descricao}}</span>
                                   <span class="info-box-number">Min.: {{previsao.temperatura_min}}&deg;</span>
                                   <span class="info-box-number">Máx.: {{previsao.temperatura_max}}&deg;</span>
@@ -127,11 +127,11 @@
                     <div class="box-body box-size" ng-class="{'collapse' : collapM}">
                       <h4>Máxima</h4>
                       <span class="info-box-number">{{maxima.temperatura_max}}&deg;</span>
-                      <span class="info-box-text">{{maxima.data}}</span>
+                      <span class="info-box-text">{{maxima.data | date: 'EEE, d, MMM'}}</span>
                       <hr>
                       <h4>Mínima</h4>
                       <span class="info-box-number">{{minima.temperatura_min}}&deg;</span>
-                      <span class="info-box-text">{{minima.data}}</span>
+                      <span class="info-box-text">{{minima.data | date: 'EEE, d, MMM'}}</span>
                     </div>
                   </div>
                 </div>
@@ -155,7 +155,7 @@
                         </div>
                         <p align="center"> A praia estará ótima no final de semana. </p>
                         <span class="info-box-number">Temperatura: {{sunday.temperatura_max}}&deg;</span>
-                        <span class="info-box-number">{{sunday.descricao}} - {{sunday.data}}</span>
+                        <span class="info-box-number">{{sunday.descricao}} - {{sunday.data | date: 'EEEE d MMM'}}</span>
                       </div>
 
                       <div ng-if="!recommend">
@@ -164,7 +164,7 @@
                         </div>
                         <p align="center"> A praia pode não ser uma boa opção. </p>
                         <span class="info-box-number">Temperatura: {{sunday.temperatura_max}}&deg;</span>
-                        <span class="info-box-number">{{sunday.descricao}} - {{sunday.data}}</span>
+                        <span class="info-box-number">{{sunday.descricao}} - {{sunday.data | date: 'EEEE d MMM'}}</span>
                       </div>
 
                     </div>
@@ -198,7 +198,7 @@
         <footer class="main-footer">
           <div class="container">
             <div class="pull-right hidden-xs">
-              <b>Versão</b> 1.0.0
+              <b>Versão</b> 1.0.1
             </div>
             <strong>&copy; 2016 SN-Tempo.</strong> <a href="https://github.com/thiagobitencourt" target="_blank">Thiago Bitencourt</a>
           </div>
@@ -206,8 +206,8 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"> </script>
-    <script src="http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/angular.chartjs/1.0.0/angular-chart.min.js"> </script>
     <script>var app = angular.module("snTempo", ['chart.js']); /* Create the angular application */</script>
     <script src="js/services/cities.js"> </script>
     <script src="js/services/blMocks.js"> </script>
