@@ -1,6 +1,6 @@
 # SN Tempo
 
-Aplicativo AngularJS de apresentação de previsão do tempo para uma determinada cidade/estado. Consome a API [Previsão do Tempo](http://developers.agenciaideias.com.br/tempo) para a obtenção dos dados.
+Aplicativo AngularJS de apresentação de previsão do tempo para uma determinada cidade/estado. Consome a API [Previsão do Tempo](https://openweathermap.org/api) para a obtenção dos dados.
 
 __P.S.__ A API apresenta instabilidade para algumas cidades. Para algumas cidades que não encontra as informações de previsão de tempo, retorna a previsão geral para todo o estado selecionado e para algumas cidades retorna um erro.
 
@@ -27,4 +27,4 @@ Para a utilização do applicativo sem a necessidade de clonar o repositório, a
 - Indicação de passeio na praia de acordo com a previsão do tempo para o próximo final de semana.
 
 ## Versão
-1.0.1
+1.0.2
