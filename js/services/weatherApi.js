@@ -1,6 +1,6 @@
 'use strict';
 app.service('weatherApi', ['$http', 'favoriteManager', function($http, favoriteManager){
-  var baseUri = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=';
+  var baseUri = 'https://api.openweathermap.org/data/2.5/forecast/daily?q=';
 
   var WEATHER_API = {
     apiKey: '&APPID=48a8880f0160d31ca929ad28ceffacab',
@@ -13,7 +13,7 @@ app.service('weatherApi', ['$http', 'favoriteManager', function($http, favoriteM
   /* The API does not respond for Blumenau city as expected.
    So, is used mocks to show some random datas, as suggested */
   this.consult = function(city, state) {
-    /* If the city and state are that in mocks or favorite, just return the object */
+    /* If the city and state are thare in mocks or favorite, just return the object */
     // var data = favoriteManager.useData(city, state);
     // if (data) {
     //   /* Returns a fake promise */
